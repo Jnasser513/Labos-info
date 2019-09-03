@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+  
+struct Complejo {
+   int real;
+   int imag;
+};
+   
+int main() {
+   Complejo c1, c2, suma;
+   
+   cout << "Ingresar valor del primer numero complejo\n";
+   cin >> c1.real >> c1.imag;
+     
+   cout << "Ingresar valor del segundo numero complejo\n";
+   cin >> c2.real >> c2.imag;
+     
+
+   suma.real = c1.real + c2.real;
+   suma.imag = c1.imag + c2.imag;
+      
+   if(suma.imag >= 0 )
+      cout << "La suma es: "<< suma.real << " + " << suma.imag<<"i";
+   else
+      cout << "La suma es: "<< suma.real << " - " << suma.imag<<"i";
+     
+   return 0;
+}
