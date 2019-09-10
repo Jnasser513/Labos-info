@@ -1,0 +1,33 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+long double rEntero(int num, long double r);
+
+int main(){
+    int entero = 0, semilla = 0;
+    IngresarEntero:
+    cout <<"Ingrese el valor de la raiz cuadrada que desea conocer: " << endl;
+    cin >> entero;
+    if(entero<0)
+        goto IngresarEntero;
+    
+    IngresarSemilla:
+    cout << "Ingrese el valor semilla: " << endl;
+    cin >> semilla;
+    if(semilla<0)
+        goto IngresarSemilla;
+    
+    cout << rEntero(entero, semilla);
+    
+    return 0;
+}
+
+long double rEntero(int num, long double r){
+    long double r2 = (((num/r)+r)/2);
+    if(abs(r-r2)<0.0001)
+        return r2;
+    else
+        return rEntero(num, r2);
+}
