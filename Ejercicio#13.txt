@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int main(void){
+    int n;
+    cout <<"Digite un numero: " << endl;
+    cin >> n;
+    
+    int i=n-1;
+    if(i==0)
+        return 0;
+    
+    while(i>=0){
+        n = n+1;
+        i--;
+    }
+    cout << n << endl;
+    
+    return 0;
+}
