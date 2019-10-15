@@ -1,0 +1,134 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+struct nombre{
+	string Nombre, Apellido, Carnet, Telefono, Correo;
+	int edad;
+
+	nombre* sgt;
+};
+
+void InsertDat(nombre** pInicio);
+void Imprmenu(void);
+void ImprDat(nombre* lista, int cuenta);
+void DeleteName(nombre** lista, string busq, int cuenta);
+void actDatos(nombre** lista, string busq, int cuenta);
+
+int main(void) {
+	int opcion=0;
+	string busca="";
+	nombre* pInicio = NULL;
+	do{
+		Imprmenu(); cin >> opcion;
+
+		switch (opcion) {
+		case 1:
+			InsertDat(&pInicio);
+			break;
+		case 2:
+			cout<<"Ingrese el nombre que desea eliminar: ";cin>>busca;
+			cout<<endl;
+			DeleteName(&pInicio, busca, 0);
+			break;
+		case 3:
+		    cout<<"Ingrese el nombre de la persona a la que desea actualizar sus datos: ";cin>>busca;
+			cout<<endl;
+			actDatos(&pInicio, busca, 0);
+			break;
+		case 4:
+			ImprDat(pInicio, 0);
+			break;
+		}
+
+
+	} while (opcion != 0);
+
+	return 0;
+}
+void InsertDat(nombre** pInicio){
+	nombre* nuevo = new nombre;
+	cout << "Ingrese su nombre: "; cin >> nuevo->Nombre;
+	cout << "Ingrese su apellido: "; cin >> nuevo->Apellido;
+	cout << "Ingrese su carnet: "; cin >> nuevo->Carnet;
+	cout << "Ingrese su telefono: "; cin >> nuevo->Telefono;
+	cout << "Ingrese su correo: "; cin >> nuevo->Correo;
+	cout << "Ingrese edad: "; cin >> nuevo->edad;
+	nuevo->sgt = NULL;
+
+	if (!*pInicio)
+		* pInicio = nuevo;
+	else {
+		nombre* aux = *pInicio;
+
+		while (aux->sgt)
+			aux = aux->sgt;
+
+		aux->sgt = nuevo;
+	}
+}
+
+void Imprmenu(void) {
+	cout<<endl;
+	cout << "MENU PRINCIPAL" << endl << endl;
+	cout << "1. Introducir datos (nombres y apellidos sin espacio por favor) . . ." << endl;
+	cout << "2. Eliminar datos de una persona por nombre. . ." << endl;
+	cout << "3. Actualizar datos de una persona por nombre . . ." << endl;
+	cout << "4. Mostrar Datos" << endl;
+	cout << "0. Salir.....Su opcion: ";
+}
+
+void ImprDat(nombre* lista, int cuenta){
+	if(!lista){
+	    if(cuenta==0){
+	    	cout<<endl;
+	    	cout<<"Lista Vacia"<<endl;
+		}
+		return;
+	}
+	else{
+		cout<<endl;
+		cout << " Digite su Nombre: " << lista->Nombre <<endl;
+		cout<< "Digite su Apellido: " << lista->Apellido<<endl;
+		cout<< "Digite su Carnet: " << lista->Carnet<<endl;
+		cout<< "Digite su Correo: " << lista->Correo<<endl;
+		cout<< "Digite su Telefono: " << lista->Telefono<<endl;
+		cout<< "Digite su Edad: " << lista->edad<<endl;
+		ImprDat(lista->sgt, cuenta+1);
+	}
+}
+void actDatos(nombre** lista, string busq, int cuenta) {
+	if (*lista){
+		if ((*(*lista)).Nombre == busq) {
+			(*(*lista)).Apellido="";
+			cout << "Ingrese un apellido: "; cin >> (*(*lista)).Apellido;
+			cout << "Ingrese un carnet: "; cin >> (*(*lista)).Carnet;
+			cout << "Ingrese un telefono: "; cin >> (*(*lista)).Telefono;
+			cout << "Ingrese un correo: "; cin >> (*(*lista)).Correo;
+			cout << "Ingrese edad: "; cin >> (*(*lista)).edad;
+	
+		}
+		else {
+			actDatos(&(*(*lista)).sgt, busq, cuenta+1);
+		}
+	}else{
+		if(cuenta==0)
+		cout<<"Lista sin datos"<<endl;
+	}
+}
+
+void DeleteName(nombre** lista, string busq, int cuenta) {
+	if (*lista ) {
+		if ((*(*lista)).Nombre == busq) {
+			*lista = (*(*lista)).sgt;
+			DeleteName(lista, busq, cuenta+1);
+		}
+		else {
+			DeleteName(&(*(*lista)).sgt, busq, cuenta+1);
+		}
+	}else{
+		if(cuenta==0)
+		cout<<"Lista sin datos"<<endl;
+	}
+}
